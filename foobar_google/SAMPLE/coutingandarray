@@ -1,0 +1,57 @@
+//
+//  main.cpp
+//  Couting Sort
+//
+//  Created by lt100211 on 8/27/16.
+//  Copyright © 2016 lt100211. All rights reserved.
+//
+
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+
+using namespace std;
+
+
+void countingsort(int array[], int array_length) // hand the function the array and the size of the array for this to work
+{
+
+    int output[sizeof(array)];
+    int count[array_length + 1], i;
+    memset(count, 0, sizeof(count));
+    
+    for(i = 0; array[i]; ++i)
+        ++count[array[i]]; // getting the count of each individual numbers
+
+    for (i = 1; i <= array_length; ++i)
+        count[i] += count[i-1];
+    
+    for (i = 0; array[i]; ++i)
+    {
+        output[count[array[i]]-1] = array[i];
+        --count[array[i]];
+    }
+    
+    for (i = 0; array[i]; ++i)
+        array[i] = output[i];
+}
+
+
+int main(int argc, const char * argv[])
+{
+    int foo [7] = {1,4,1,2,7,5,2};
+    int count =  sizeof(foo);
+    countingsort(foo, sizeof(foo));
+    copy(foo,
+         foo + sizeof(foo) / sizeof(foo[0]),
+         ostream_iterator<short>(cout, ", "));
+    std::reverse(std::begin(foo), std::end(foo));
+    cout << "reversing\n";
+    copy(foo,
+         foo + sizeof(foo) / sizeof(foo[0]),
+         ostream_iterator<short>(cout, ", "));
+    
+    
+}
+
+

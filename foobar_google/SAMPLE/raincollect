@@ -1,0 +1,78 @@
+//
+//  main.cpp
+//  Coins
+//
+//  Created by lt100211 on 8/31/16.
+//  Copyright © 2016 lt100211. All rights reserved.
+//
+
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <cmath>
+using namespace std;
+void rainfunc(int array[], int array_size)
+{
+    
+    int raintotal = 0;
+    cout<<"running rain func"<<endl;
+    for(int i=1;i<array_size-1;i++){
+        int sidestepright=1;
+        int sidestepleft=1;
+        int leftdif = array[i-1]-array[i];
+        int rightdif = array[i+1]-array[i];
+        while(rightdif<=0)
+        {
+            //cout<<"\n block number:"<<i<<" rightdif is :"<<rightdif<<endl;
+            sidestepright++;
+            rightdif = array[i+sidestepright]-array[i];
+            if((i+sidestepright) == array_size-1)
+            {
+                break;
+            }
+        }
+        while(sidestepleft<=0 && (i-sidestepleft)>0)
+        {
+            //cout<<"\n block number:"<<i<<" rightdif is :"<<rightdif<<endl;
+            sidestepleft++;
+            rightdif = array[i-sidestepleft]-array[i];
+        }
+        //cout<<"\nCurrent block: "<<i<<endl;
+        if(rightdif > 0 && leftdif>0)
+        {
+            int temp;
+            int limit;
+            if(rightdif>leftdif)
+            {
+                limit = leftdif;
+            }
+            else{
+                limit = rightdif;
+            }
+            int sectionwidth = (i+sidestepright)-(i-sidestepleft)-1;
+            int sectiontotal = limit*sectionwidth;
+            //cout<<"\ntotal possible rain holding is:"<<sectiontotal<<", "<<limit<<", "<<sectionwidth<<endl;
+            for(int q = i-leftdif;q<i+rightdif;++q)
+            temp = sectiontotal;
+            raintotal = raintotal + temp;
+            cout<<"\nThe rain holding ability of block: "<<i<<" is :"<<temp<<"\nwidth right is: "<<i+sidestepright<<"\n width left is :"<<i-sidestepleft<<endl;
+            cout<<"\ncurrent total: "<<raintotal<<endl;
+        }
+        
+    }
+cout<<"rain total: "<<raintotal<<endl;
+}
+
+
+
+int main(void) {
+    cout<<"Running main\n";
+    int rain[12] = {0,1,0,2,1,0,1,3,2,1,2,1};
+    int arsize = 12;
+    rainfunc(rain, arsize);
+    return 0;
+}
+

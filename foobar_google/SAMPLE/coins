@@ -1,0 +1,125 @@
+//
+//  main.cpp
+//  Coins
+//
+//  Created by lt100211 on 8/31/16.
+//  Copyright © 2016 lt100211. All rights reserved.
+//
+
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <vector>
+using namespace std;
+void CountingSort(int array[], int array_max, int array_size) // hand the function the array and the size of the array for this to work
+{
+    int size = array_max+1;
+    
+    cout<<"\n found array size to be: "<<array_size;
+    vector<int> output(5, 0);
+    //int count[size];
+    vector<int> count(size, 0);
+    for(int i = 0;i<=array_max;i++)
+    {
+        count[i] = 0;
+    }
+    for(int i = 0;i<array_size;i++)
+    {
+        ++count[array[i]];
+    }
+    for (int i = 1; i<=array_max;i++)
+    {
+        count[i] = count[i] + count[i-1];
+    }
+  
+    for (int i=0;i<array_size;i++)
+    {
+        
+        int temp = count[array[i]];
+        output[temp-1] = array[i];
+        --count[array[i]];
+    }
+    for (int i = 0; array[i]; ++i)
+    {
+        array[i] = output[i];
+    }
+    cout<<"\narray printing\n";
+    for (int i=0; i<array_size;i++)
+    {
+        cout<<"\n ,  "<<output[i];
+    }
+    
+}
+
+int coincounter(int coins[], int amount, int arraysize)
+{
+    int count = 0;
+    int i = 0;
+    queue<int> usedcoins;
+    while(i<arraysize)
+    {
+    int pos = amount-coins[i];
+    while(pos>0)
+    {
+        
+            amount = amount - coins[i];
+            count++;
+            usedcoins.push(coins[i]);
+        pos = pos-coins[i];
+    }
+    
+    if(pos < 0)
+    {
+        i++;
+    }
+    if(pos == 0)
+    {
+        count++;
+        usedcoins.push(coins[i]);
+        cout<<"\nThe coins used are: ";
+        while(!usedcoins.empty())
+        {
+            int stacktemp = usedcoins.front();
+            cout<<stacktemp<<", ";
+            usedcoins.pop();
+        }
+        cout<<"\n\n";
+        i=arraysize+1;
+    }
+    }
+    
+    
+    
+    return count;
+}
+
+int main(void) {
+    // insert code here...
+    std::cout << "Starting Main\n";
+    int coins[8] = {6,21,6,3,8,3,2,1};
+    int amount = 45;
+    //int coincount = coincounter(coins, amount);
+    int sizearray = sizeof(coins)/sizeof(*coins);
+    cout<<"\n\nThe size is: "<< sizearray;
+    CountingSort(coins, 21, sizearray);
+    cout<<"Print coin array\n";
+    
+    for(int y = 0; y<sizearray;y++)
+        {
+            cout<<", "<<coins[y];
+        }
+    
+    reverse(begin(coins), end(coins));
+    cout<<"\nReversed Array\n";
+    for(int y = 0; y<sizearray;y++)
+    {
+        cout<<", "<<coins[y];
+    }
+    
+    int coincount = coincounter(coins, amount, 5);
+    cout<<"\n\nThe answer is: "<<coincount<<"\n";
+    
+    
+    return 0;
+}
+

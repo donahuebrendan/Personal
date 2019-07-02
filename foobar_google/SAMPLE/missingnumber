@@ -1,0 +1,47 @@
+//
+//  main.cpp
+//  Coins
+//
+//  Created by lt100211 on 8/31/16.
+//  Copyright © 2016 lt100211. All rights reserved.
+//
+
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <cmath>
+using namespace std;
+
+int findmissing(vector<int> array, int size)
+{
+    int arraytotal = 0;
+    int abstotal = 0;
+    
+    for (int i = 0;i<size;i++)
+    {
+        arraytotal = arraytotal + array[i];
+    }
+    for (int i = 0;i<=size;i++)
+         {
+             abstotal = abstotal + i;
+         }
+    
+    return abs(arraytotal-abstotal);
+}
+
+
+
+int main(void) {
+    cout<<"Running main\n";
+    
+    int arrlist[6] = {0,1,2,3,4,6};
+    vector<int> testvector (arrlist, arrlist + sizeof(arrlist) / sizeof(int) );
+    int testsize = testvector.size();
+    cout<<"\nTest size is: "<<testsize<<endl;
+    int missingnum = findmissing(testvector, testsize);
+    cout<<"\nThe answer is: "<<missingnum<<endl;
+}
+

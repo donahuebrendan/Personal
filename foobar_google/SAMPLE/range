@@ -1,0 +1,77 @@
+//
+//  main.cpp
+//  Coins
+//
+//  Created by lt100211 on 8/31/16.
+//  Copyright © 2016 lt100211. All rights reserved.
+//
+
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <vector>
+#include <string>
+#include <sstream>
+using namespace std;
+int startnewrange (int array[], int start, int size)
+{
+    int startpoint = start;
+    while(array[startpoint+1] == array[startpoint]+1)
+        {
+            startpoint++;
+        
+        }
+    
+    return startpoint;
+}
+void rangefunc(int array[], int size)
+{
+    cout<<"range called";
+    stack<char> rangelist;
+    stack<string> ans_string;
+    rangelist.push(array[0]);
+    int start = 0;
+    int end = 0;
+    ostringstream oss;
+    string temp;
+    while(start<size)
+        {
+            end = startnewrange(array, start, size);
+            cout<<"\n range points are :"<<array[start]<<"->"<<array[end];
+            if (end[array] == array[start])
+            
+            {
+                oss<<array[start];
+                string temp = oss.str();
+                ans_string.push(temp);
+            }
+            else{
+                oss<<array[start]<<"->"<<array[end];
+                string temp = oss.str();
+                ans_string.push(temp);
+        
+            }
+            start = end+1;
+    }
+    cout<<"\n";
+    while(!ans_string.empty())
+    {
+        string bpd = ans_string.top();
+        cout<<", "<<bpd;
+        ans_string.pop();
+    }
+    
+}
+
+
+
+int main(void) {
+    cout<<"Running main\n";
+    int sorted[6] = {0,1,2,4,5,7};
+    int size = (sizeof(sorted)/sizeof(*sorted));
+    cout<<"size of the array is: "<<size<<"\n";
+    rangefunc(sorted, size);
+    
+    return 0;
+}
+
